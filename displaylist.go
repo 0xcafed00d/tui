@@ -98,3 +98,7 @@ func (dl *DisplayList) HandleInput(k termbox.Key, r rune) {
 		}
 	}
 }
+
+type TUIElement struct {
+	geom.Rectangle
+}
