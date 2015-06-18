@@ -18,6 +18,9 @@ func main() {
 	//logDisp := tui.ScrollingTextOutput{1, 20, 80, 10, nil}
 	cmdInput := tui.MakeTextInputField(10, 18, func(cmd string) {
 		//logDisp.WriteLine(cmd)
+		if cmd == "q" {
+			doQuit = true
+		}
 	})
 
 	dl := tui.DisplayList{}

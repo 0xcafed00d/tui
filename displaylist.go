@@ -34,18 +34,24 @@ func clearRectDef(rect geom.Rectangle) {
 	clearRect(rect, '.', termbox.ColorDefault, termbox.ColorDefault)
 }
 
-type DisplayElement interface {
-	GiveFocus() bool
-	HandleInput(k termbox.Key, r rune)
+type Focusable interface {
+	GiveFocus()
+}
+
+type Drawable interface {
 	Draw()
 }
 
+type Controlable interface {
+	HandleInput(k termbox.Key, r rune)
+}
+
 type DisplayList struct {
-	list       []DisplayElement
+	list       []Drawable
 	focusIndex int
 }
 
-func (dl *DisplayList) AddElement(elem DisplayElement) {
+func (dl *DisplayList) AddElement(elem Drawable) {
 	dl.list = append(dl.list, elem)
 }
 
