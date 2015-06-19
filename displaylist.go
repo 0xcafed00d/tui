@@ -72,7 +72,8 @@ func (dl *DisplayList) NextFocus() {
 				dl.focusIndex = 0
 			}
 
-			if dl.list[dl.focusIndex].GiveFocus() {
+			if f, ok := dl.list[dl.focusIndex].(Focusable); ok {
+				f.GiveFocus()
 				break
 			}
 		}
@@ -87,7 +88,8 @@ func (dl *DisplayList) PrevFocus() {
 				dl.focusIndex = len(dl.list)
 			}
 
-			if dl.list[dl.focusIndex].GiveFocus() {
+			if f, ok := dl.list[dl.focusIndex].(Focusable); ok {
+				f.GiveFocus()
 				break
 			}
 		}
@@ -100,7 +102,10 @@ func (dl *DisplayList) HandleInput(k termbox.Key, r rune) {
 		if k == termbox.KeyTab {
 			dl.NextFocus()
 		} else {
-			dl.list[dl.focusIndex].HandleInput(k, r)
+			if c, ok := dl.list[dl.focusIndex].(Controlable); ok {
+				c.HandleInput(k, r)
+			}
+
 		}
 	}
 }
