@@ -15,9 +15,9 @@ func main() {
 
 	doQuit := false
 
-	//logDisp := tui.ScrollingTextOutput{1, 20, 80, 10, nil}
-	cmdInput := tui.MakeTextInputField(10, 18, func(cmd string) {
-		//logDisp.WriteLine(cmd)
+	logDisp := tui.MakeScrollingTextOutput(geom.XYWH(1, 20, 80, 10))
+	cmdInput := tui.MakeTextInputField(0, 18, func(cmd string) {
+		logDisp.WriteLine(cmd)
 		if cmd == "q" {
 			doQuit = true
 		}
@@ -25,8 +25,8 @@ func main() {
 
 	dl := tui.DisplayList{}
 	dl.AddElement(cmdInput)
-	//	dl.AddElement(&logDisp)
-	dl.AddElement(tui.MakeStaticText(geom.Rectangle{geom.Coord{0, 0}, geom.Coord{0, 0}}, "StaticText"))
+	dl.AddElement(logDisp)
+	dl.AddElement(tui.MakeStaticText(geom.XYWH(0, 0, 1, 1), "StaticText"))
 
 	dl.Draw()
 	termbox.Flush()

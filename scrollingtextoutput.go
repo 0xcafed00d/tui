@@ -1,17 +1,16 @@
 package tui
 
 import (
-	"github.com/nsf/termbox-go"
 	"github.com/simulatedsimian/go_sandbox/geom"
 )
 
 type ScrollingTextOutput struct {
-	x, y int
-	w, h int
+	TUIElement
 	text []string
 }
 
-func (t *ScrollingTextOutput) HandleInput(k termbox.Key, r rune) {
+func MakeScrollingTextOutput(pos geom.Rectangle) *ScrollingTextOutput {
+	return &ScrollingTextOutput{TUIElement{pos}, nil}
 }
 
 func (t *ScrollingTextOutput) Write(p []byte) (n int, err error) {
@@ -23,21 +22,17 @@ func (t *ScrollingTextOutput) WriteLine(l string) {
 }
 
 func (t *ScrollingTextOutput) Draw() {
-	clearRectDef(geom.RectangleFromPosSize(geom.Coord{t.x, t.y}, geom.Coord{t.w, t.h}))
+	clearRectDef(t.TUIElement.Rectangle)
 
 	start := 0
 
-	if len(t.text) > t.h {
-		start = len(t.text) - t.h
+	if len(t.text) > t.Height() {
+		start = len(t.text) - t.Height()
 	}
 
-	y := t.y
+	y := t.Min.Y
 	for l := start; l < len(t.text); l++ {
-		printAtDef(t.x, y, t.text[l])
+		printAtDef(t.Min.X, y, t.text[l])
 		y++
 	}
-}
-
-func (t *ScrollingTextOutput) GiveFocus() bool {
-	return false
 }
