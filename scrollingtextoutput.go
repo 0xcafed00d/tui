@@ -1,7 +1,7 @@
 package tui
 
 import (
-	"github.com/simulatedsimian/go_sandbox/geom"
+	"github.com/simulatedsimian/rect"
 )
 
 type ScrollingTextOutput struct {
@@ -9,7 +9,7 @@ type ScrollingTextOutput struct {
 	text []string
 }
 
-func MakeScrollingTextOutput(pos geom.Rectangle) *ScrollingTextOutput {
+func MakeScrollingTextOutput(pos rect.Rectangle) *ScrollingTextOutput {
 	return &ScrollingTextOutput{TUIElement{pos}, nil}
 }
 

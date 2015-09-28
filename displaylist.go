@@ -2,7 +2,7 @@ package tui
 
 import (
 	"github.com/nsf/termbox-go"
-	"github.com/simulatedsimian/go_sandbox/geom"
+	"github.com/simulatedsimian/rect"
 )
 
 func printAt(x, y int, s string, fg, bg termbox.Attribute) {
@@ -16,11 +16,11 @@ func printAtDef(x, y int, s string) {
 	printAt(x, y, s, termbox.ColorDefault, termbox.ColorDefault)
 }
 
-func clearRect(rect geom.Rectangle, c rune, fg, bg termbox.Attribute) {
+func clearRect(r rect.Rectangle, c rune, fg, bg termbox.Attribute) {
 	w, h := termbox.Size()
-	sz := geom.RectangleFromSize(geom.Coord{w, h})
+	sz := rect.FromSize(rect.Vec{w, h})
 
-	toClear, ok := geom.RectangleIntersection(rect, sz)
+	toClear, ok := rect.Intersection(r, sz)
 	if ok {
 		for y := toClear.Min.Y; y < toClear.Max.Y; y++ {
 			for x := toClear.Min.X; x < toClear.Max.X; x++ {
@@ -30,8 +30,8 @@ func clearRect(rect geom.Rectangle, c rune, fg, bg termbox.Attribute) {
 	}
 }
 
-func clearRectDef(rect geom.Rectangle) {
-	clearRect(rect, '.', termbox.ColorDefault, termbox.ColorDefault)
+func clearRectDef(r rect.Rectangle) {
+	clearRect(r, '.', termbox.ColorDefault, termbox.ColorDefault)
 }
 
 type Focusable interface {
@@ -57,7 +57,7 @@ func (dl *DisplayList) AddElement(elem Drawable) {
 
 func (dl *DisplayList) Draw() {
 	w, h := termbox.Size()
-	clearRectDef(geom.RectangleFromSize(geom.Coord{w, h}))
+	clearRectDef(rect.FromSize(rect.Vec{w, h}))
 
 	for _, elem := range dl.list {
 		elem.Draw()
@@ -111,5 +111,5 @@ func (dl *DisplayList) HandleInput(k termbox.Key, r rune) {
 }
 
 type TUIElement struct {
-	geom.Rectangle
+	rect.Rectangle
 }

@@ -2,7 +2,7 @@ package tui
 
 import (
 	"github.com/nsf/termbox-go"
-	"github.com/simulatedsimian/go_sandbox/geom"
+	"github.com/simulatedsimian/rect"
 )
 
 type StaticText struct {
@@ -10,7 +10,7 @@ type StaticText struct {
 	Text string
 }
 
-func MakeStaticText(pos geom.Rectangle, text string) *StaticText {
+func MakeStaticText(pos rect.Rectangle, text string) *StaticText {
 	return &StaticText{TUIElement{pos}, text}
 }
 
