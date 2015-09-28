@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/nsf/termbox-go"
-	"github.com/simulatedsimian/go_sandbox/geom"
+	"github.com/simulatedsimian/rect"
 	"github.com/simulatedsimian/tui"
 )
 
@@ -15,7 +15,7 @@ func main() {
 
 	doQuit := false
 
-	logDisp := tui.MakeScrollingTextOutput(geom.XYWH(1, 20, 80, 10))
+	logDisp := tui.MakeScrollingTextOutput(rect.XYWH(1, 20, 80, 10))
 	cmdInput := tui.MakeTextInputField(0, 18, func(cmd string) {
 		logDisp.WriteLine(cmd)
 		if cmd == "q" {
@@ -26,7 +26,7 @@ func main() {
 	dl := tui.DisplayList{}
 	dl.AddElement(cmdInput)
 	dl.AddElement(logDisp)
-	dl.AddElement(tui.MakeStaticText(geom.XYWH(0, 0, 1, 1), "StaticText"))
+	dl.AddElement(tui.MakeStaticText(rect.XYWH(0, 0, 1, 1), "StaticText"))
 
 	dl.Draw()
 	termbox.Flush()
